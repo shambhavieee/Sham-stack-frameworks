@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sham-Stack Frameworks — The perfect solution for clarity plannings</title>
+
+  <!-- Poppins font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Fav icon (simple) -->
+  <meta name="theme-color" content="#72bf6a">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <!-- simple logo mark -->
+        <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true">
+          <rect x="2" y="6" width="20" height="12" rx="3" fill="#ffffff20"/>
+          <path d="M6 10h3v4H6zM11 8h3v8h-3zM16 12h2v4h-2z" fill="#ffffff"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="app-title">Sham-Stack Frameworks</div>
+        <div class="tagline">The perfect solution for clarity plannings</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button id="btnNewTask" class="btn primary">+ New Task</button>
+      <div class="search-wrap">
+        <input id="searchInput" type="search" placeholder="Search tasks or assignee..." />
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <aside class="leftpanel glass">
+      <div class="panel-section">
+        <h4>Board Overview</h4>
+        <p class="muted">Columns: Backlog · To Do · In Progress · Review · Done</p>
+        <div class="stats">
+          <div><strong id="countTotal">—</strong><span>Total</span></div>
+          <div><strong id="countActive">—</strong><span>Active</span></div>
+          <div><strong id="countDone">—</strong><span>Done</span></div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h4>Quick Filters</h4>
+        <div class="filters">
+          <button class="chip" data-filter="priority-all">All</button>
+          <button class="chip" data-filter="priority-high">High</button>
+          <button class="chip" data-filter="priority-medium">Medium</button>
+          <button class="chip" data-filter="priority-low">Low</button>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h4>Export / Import</h4>
+        <small class="muted">Export a JSON snapshot or import one (handled by app.js)</small>
+        <div class="export-row">
+          <button id="btnExport" class="btn ghost">Export JSON</button>
+          <input id="fileImport" type="file" accept="application/json" />
+        </div>
+      </div>
+    </aside>
+
+    <section class="board">
+      <!-- Columns: auto-chosen set -->
+      <div class="columns" id="boardColumns">
+        <!-- Column template: give each column an id and data-key -->
+        <div class="column glass" data-key="backlog">
+          <div class="column-header">
+            <h3>Backlog <span class="col-count" data-key="backlog-count">2</span></h3>
+            <div class="col-actions">
+              <button class="icon-btn" title="Add to Backlog" data-add-to="backlog">＋</button>
+            </div>
+          </div>
+          <div class="column-body" id="col-backlog" data-column="backlog">
+            <!-- sample card -->
+            <article class="task-card" data-id="t-sample-1" draggable="true">
+              <div class="task-row">
+                <h4 class="task-title">Product Requirements — Draft initial PRD — Medium</h4>
+                <div class="task-actions">
+                  <button class="icon-btn small edit" title="Edit">✎</button>
+                  <button class="icon-btn small del" title="Delete">🗑</button>
+                </div>
+              </div>
+              <p class="task-desc">Collect stakeholders' needs & define MVP scope.</p>
+              <div class="task-meta">
+                <span class="badge priority medium">Medium</span>
+                <span class="assignee">—</span>
+                <time class="due">Due: 2025-12-20</time>
+              </div>
+            </article>
+
+            <article class="task-card" data-id="t-sample-2" draggable="true">
+              <div class="task-row">
+                <h4 class="task-title">Backlog Cleanup — Remove stale items — Low</h4>
+                <div class="task-actions">
+                  <button class="icon-btn small edit" title="Edit">✎</button>
+                  <button class="icon-btn small del" title="Delete">🗑</button>
+                </div>
+              </div>
+              <p class="task-desc">Archive unassigned or blocked tasks older than 6 months.</p>
+              <div class="task-meta">
+                <span class="badge priority low">Low</span>
+                <span class="assignee">—</span>
+                <time class="due">Due: 2026-01-10</time>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="column glass" data-key="todo">
+          <div class="column-header">
+            <h3>To Do <span class="col-count" data-key="todo-count">1</span></h3>
+            <div class="col-actions">
+              <button class="icon-btn" data-add-to="todo">＋</button>
+            </div>
+          </div>
+          <div class="column-body" id="col-todo" data-column="todo">
+            <article class="task-card" data-id="t-sample-3" draggable="true">
+              <div class="task-row">
+                <h4 class="task-title">Set up repository — Initialize repo & CI — High</h4>
+                <div class="task-actions">
+                  <button class="icon-btn small edit" title="Edit">✎</button>
+                  <button class="icon-btn small del" title="Delete">🗑</button>
+                </div>
+              </div>
+              <p class="task-desc">Create GitHub repo, add README, enable GitHub Actions build.</p>
+              <div class="task-meta">
+                <span class="badge priority high">High</span>
+                <span class="assignee">Sam</span>
+                <time class="due">Due: 2025-12-10</time>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="column glass" data-key="inprogress">
+          <div class="column-header">
+            <h3>In Progress <span class="col-count" data-key="inprogress-count">0</span></h3>
+            <div class="col-actions">
+              <button class="icon-btn" data-add-to="inprogress">＋</button>
+            </div>
+          </div>
+          <div class="column-body" id="col-inprogress" data-column="inprogress">
+            <!-- empty initially -->
+          </div>
+        </div>
+
+        <div class="column glass" data-key="review">
+          <div class="column-header">
+            <h3>Review <span class="col-count" data-key="review-count">0</span></h3>
+            <div class="col-actions">
+              <button class="icon-btn" data-add-to="review">＋</button>
+            </div>
+          </div>
+          <div class="column-body" id="col-review" data-column="review">
+          </div>
+        </div>
+
+        <div class="column glass" data-key="done">
+          <div class="column-header">
+            <h3>Done <span class="col-count" data-key="done-count">0</span></h3>
+            <div class="col-actions">
+              <button class="icon-btn" data-add-to="done">＋</button>
+            </div>
+          </div>
+          <div class="column-body" id="col-done" data-column="done">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Task Modal (hidden by default) -->
+  <div id="taskModal" class="modal" aria-hidden="true">
+    <div class="modal-panel glass">
+      <header class="modal-header">
+        <h3 id="modalTitle">New Task</h3>
+        <button id="modalClose" class="icon-btn">✕</button>
+      </header>
+
+      <form id="taskForm" autocomplete="off">
+        <input type="hidden" id="taskId" value="">
+        <div class="form-row">
+          <label for="taskTitle">Title</label>
+          <input id="taskTitle" required maxlength="120" placeholder="Summarize the task" />
+        </div>
+
+        <div class="form-row">
+          <label for="taskDesc">Description</label>
+          <textarea id="taskDesc" rows="3" placeholder="Details..."></textarea>
+        </div>
+
+        <div class="form-row grid-3">
+          <div>
+            <label for="taskPriority">Priority</label>
+            <select id="taskPriority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div>
+            <label for="taskAssignee">Assignee</label>
+            <input id="taskAssignee" placeholder="Name or initials" />
+          </div>
+          <div>
+            <label for="taskDue">Due date</label>
+            <input id="taskDue" type="date" />
+          </div>
+        </div>
+
+        <div class="form-row form-actions">
+          <button type="submit" class="btn primary">Save Task</button>
+          <button type="button" id="btnCancel" class="btn ghost">Cancel</button>
+          <button type="button" id="btnDelete" class="btn danger hidden">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <small>© <span id="year"></span> Sham-Stack Frameworks · Built with HTML, CSS & JavaScript</small>
+  </footer>
+
+  <!-- App script to be provided by you -->
+  <script>
+    // small UI helpers that app.js can reuse if needed
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Open modal quick hook
+    document.getElementById('btnNewTask').addEventListener('click', () => {
+      const showEvent = new CustomEvent('open-task-modal', { detail: { mode: 'new' }});
+      window.dispatchEvent(showEvent);
+    });
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
